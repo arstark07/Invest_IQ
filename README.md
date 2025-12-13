@@ -403,8 +403,8 @@ For support, please:
 **Version**: 1.0.0
 
 ##Screenshots
-![Dashboard]("https://github.com/user-attachments/assets/ef274e80-4c91-4601-9960-8898ac07b559")
-![Wallet]("https://github.com/user-attachments/assets/626868e4-c3d2-4638-b26d-79965c22db19")
-![Portfolio]("https://github.com/user-attachments/assets/e213a965-efc5-47c2-90f6-4086f7b4298c")
+![Dashboard](https://github.com/user-attachments/assets/ef274e80-4c91-4601-9960-8898ac07b559)
+![Wallet](https://github.com/user-attachments/assets/626868e4-c3d2-4638-b26d-79965c22db19)
+![Portfolio](https://github.com/user-attachments/assets/e213a965-efc5-47c2-90f6-4086f7b4298c)
 ![Risk Profile](https://github.com/user-attachments/assets/26b3b1e6-433d-4957-9b38-b2fe1b00e3a8)
-![KYC]("https://github.com/user-attachments/assets/641b25d9-238d-4e7a-b181-04d7d6c000df")
+![KYC](https://github.com/user-attachments/assets/641b25d9-238d-4e7a-b181-04d7d6c000df)
