@@ -1,0 +1,16 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='900' height='360'>
+<rect width='900' height='360' fill='#f8fafc'/>
+<text x='450' y='30' font-family='Arial' font-size='14' text-anchor='middle'>Observability Dashboard</text>
+<rect x='60' y='70' width='220' height='100' fill='#e0f2fe' stroke='#0ea5e9'/>
+<text x='170' y='110' font-family='Arial' font-size='12' text-anchor='middle'>Latency p50/p95/p99</text>
+<rect x='320' y='70' width='220' height='100' fill='#dcfce7' stroke='#22c55e'/>
+<text x='430' y='110' font-family='Arial' font-size='12' text-anchor='middle'>Error Rate</text>
+<rect x='580' y='70' width='240' height='100' fill='#ddd6fe' stroke='#8b5cf6'/>
+<text x='700' y='105' font-family='Arial' font-size='12' text-anchor='middle'>LLM Failures / Timeouts</text>
+<rect x='60' y='210' width='220' height='100' fill='#fef3c7' stroke='#f59e0b'/>
+<text x='170' y='250' font-family='Arial' font-size='12' text-anchor='middle'>DB CPU / Memory</text>
+<rect x='320' y='210' width='220' height='100' fill='#bfdbfe' stroke='#3b82f6'/>
+<text x='430' y='250' font-family='Arial' font-size='12' text-anchor='middle'>Cache Hit Ratio</text>
+<rect x='580' y='210' width='240' height='100' fill='#fecdd3' stroke='#f43f5e'/>
+<text x='700' y='245' font-family='Arial' font-size='12' text-anchor='middle'>Alerts / Notifications</text>
+</svg>

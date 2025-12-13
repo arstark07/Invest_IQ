@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="500" viewBox="0 0 1000 500">
+  <style>
+    .box{fill:#fff;stroke:#0f172a;stroke-width:1.8;}
+    .title{font:14px sans-serif;fill:#0f172a;font-weight:700}
+    .label{font:12px sans-serif;fill:#0f172a}
+    .arrow{stroke:#0f172a;stroke-width:1.6;fill:none;marker-end:url(#a)}
+  </style>
+  <defs>
+    <marker id="a" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#0f172a" />
+    </marker>
+  </defs>
+
+  <rect x="50" y="40" width="220" height="70" class="box" rx="8"/>
+  <text x="70" y="70" class="title">Dashboard</text>
+  <text x="70" y="92" class="label">Account select, Widgets</text>
+
+  <rect x="370" y="40" width="240" height="70" class="box" rx="8"/>
+  <text x="400" y="70" class="title">Recommendation Panel</text>
+  <text x="400" y="92" class="label">Displays AI suggestions</text>
+
+  <rect x="690" y="40" width="220" height="70" class="box" rx="8"/>
+  <text x="710" y="70" class="title">Wallet Drawer</text>
+  <text x="710" y="92" class="label">Deposit flow: Amount → PIN → Processing</text>
+
+  <path d="M270 75 L370 75" class="arrow" />
+  <path d="M610 75 L690 75" class="arrow" />
+
+  <text x="50" y="160" class="label">User Flow: Select account → Widgets update → Open Wallet to deposit → Input PIN → Confirm → Balance updates</text>
+</svg>

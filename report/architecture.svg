@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="600" viewBox="0 0 1000 600">
+  <style>
+    .box{fill:#fff;stroke:#334155;stroke-width:2;rx:8;}
+    .title{font:16px sans-serif;fill:#0f172a;font-weight:700}
+    .label{font:12px sans-serif;fill:#0f172a}
+    .arrow{stroke:#0f172a;stroke-width:2;fill:none;marker-end:url(#arrowhead)}
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#0f172a" />
+    </marker>
+  </defs>
+
+  <!-- Frontend -->
+  <rect x="50" y="40" width="220" height="90" class="box" rx="10"/>
+  <text x="70" y="70" class="title">Frontend</text>
+  <text x="70" y="92" class="label">Next.js (App Router)</text>
+
+  <!-- Server Actions -->
+  <rect x="390" y="40" width="260" height="110" class="box" rx="10"/>
+  <text x="410" y="70" class="title">Server Actions / API</text>
+  <text x="410" y="92" class="label">Next.js Server Actions</text>
+  <text x="410" y="110" class="label">Wallet, Recommendations, Transactions</text>
+
+  <!-- Database -->
+  <rect x="750" y="40" width="180" height="90" class="box" rx="10"/>
+  <text x="770" y="70" class="title">Database</text>
+  <text x="770" y="92" class="label">Supabase (Postgres) + Prisma</text>
+
+  <!-- AI -->
+  <rect x="390" y="190" width="220" height="80" class="box" rx="10"/>
+  <text x="410" y="220" class="title">AI Service</text>
+  <text x="410" y="242" class="label">OpenRouter (LLM)</text>
+
+  <!-- Background Jobs -->
+  <rect x="50" y="190" width="220" height="80" class="box" rx="10"/>
+  <text x="70" y="220" class="title">Background Jobs</text>
+  <text x="70" y="242" class="label">Inngest / Cron</text>
+
+  <!-- Arrows -->
+  <path d="M270 85 L390 85" class="arrow" />
+  <path d="M650 85 L750 85" class="arrow" />
+  <path d="M520 150 L520 190" class="arrow" />
+  <path d="M170 130 L170 190" class="arrow" />
+
+  <!-- Notes -->
+  <text x="50" y="310" class="label">Legend: Frontend ↔ Server Actions ↔ Database; Server Actions → AI Service; Background jobs for scheduled tasks</text>
+</svg>

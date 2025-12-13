@@ -1,0 +1,553 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id            String    @id @default(uuid())
+  clerkUserId   String    @unique // clerk user id
+  email         String    @unique
+  name          String?
+  imageUrl      String?
+  phone         String?
+  panNumber     String?   // For KYC
+  aadhaarNumber String?   // For KYC (last 4 digits only)
+  dateOfBirth   DateTime?
+  kycVerified   Boolean   @default(false)
+  kycStatus     KycStatus @default(PENDING)
+  kycVerifiedAt DateTime?
+  
+  // Simulation mode tracking
+  isSimulationUser Boolean @default(true)
+  simulationBalance Decimal @default(100000) // Starting simulation balance
+  
+  transactions  Transaction[]
+  accounts      Account[]
+  budgets       Budget[]
+  wallet        Wallet?
+  riskProfile   RiskProfile?
+  investmentPlans InvestmentPlan[]
+  savingsGoals  SavingsGoal[]
+  brokerAccounts BrokerAccount[]
+  walletTransactions WalletTransaction[]
+  kycRecords    KycRecord[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@map("users")
+}
+
+// ==================== KYC VERIFICATION ====================
+
+model KycRecord {
+  id              String    @id @default(uuid())
+  userId          String
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  verificationType KycVerificationType
+  documentNumber  String?   // Masked/partial number
+  verificationStatus KycVerificationStatus @default(PENDING)
+  verifiedAt      DateTime?
+  
+  // Simulation data
+  isSimulated     Boolean   @default(true)
+  simulatedResponse Json?   // Simulated API response
+  
+  // Actual verification data (when real APIs are used)
+  apiResponse     Json?
+  failureReason   String?
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("kyc_records")
+}
+
+// ==================== WALLET SYSTEM ====================
+
+model Wallet {
+  id            String    @id @default(uuid())
+  userId        String    @unique
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  balance       Decimal   @default(0)
+  lockedBalance Decimal   @default(0) // Amount locked for pending investments
+  currency      String    @default("INR")
+  pin           String?   // Hashed PIN for transactions
+  pinAttempts   Int       @default(0)
+  isLocked      Boolean   @default(false)
+  dailyLimit    Decimal   @default(100000)
+  monthlyLimit  Decimal   @default(500000)
+  transactions  WalletTransaction[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("wallets")
+}
+
+model WalletTransaction {
+  id              String              @id @default(uuid())
+  walletId        String
+  wallet          Wallet              @relation(fields: [walletId], references: [id], onDelete: Cascade)
+  userId          String
+  user            User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type            WalletTransactionType
+  amount          Decimal
+  balanceAfter    Decimal
+  description     String?
+  referenceId     String?             // External reference (payment gateway order ID, etc.)
+  paymentGateway  PaymentGateway?
+  paymentMethod   String?             // UPI, Card, NetBanking, etc.
+  status          WalletTransactionStatus @default(PENDING)
+  metadata        Json?               // Additional gateway-specific data
+  investmentPlanId String?
+  investmentPlan  InvestmentPlan?     @relation(fields: [investmentPlanId], references: [id])
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  @@index([walletId])
+  @@index([userId])
+  @@index([referenceId])
+  @@map("wallet_transactions")
+}
+
+// ==================== RISK ASSESSMENT ====================
+
+model RiskProfile {
+  id                  String    @id @default(uuid())
+  userId              String    @unique
+  user                User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  riskLevel           RiskLevel @default(MODERATE)
+  riskScore           Int       @default(50) // 0-100 scale
+  assessmentType      AssessmentType @default(QUESTIONNAIRE)
+  
+  // Questionnaire responses
+  age                 Int?
+  monthlyIncome       Decimal?
+  monthlyExpenses     Decimal?
+  existingInvestments Decimal?
+  investmentHorizon   Int?      // In years
+  financialGoal       String?
+  riskTolerance       Int?      // 1-5 scale from questionnaire
+  investmentExperience Int?     // 1-5 scale
+  emergencyFund       Boolean?
+  dependents          Int?
+  
+  // AI-driven analysis fields (populated after sufficient usage)
+  spendingPatternScore  Int?    // AI calculated
+  savingsConsistencyScore Int?  // AI calculated
+  incomeStabilityScore  Int?    // AI calculated
+  lastAiAnalysis        DateTime?
+  aiRecommendations     Json?   // AI generated recommendations
+  
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  @@map("risk_profiles")
+}
+
+// ==================== INVESTMENT SYSTEM ====================
+
+model InvestmentPlan {
+  id                String    @id @default(uuid())
+  userId            String
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name              String
+  description       String?
+  targetAmount      Decimal
+  currentAmount     Decimal   @default(0)
+  monthlyContribution Decimal
+  startDate         DateTime  @default(now())
+  endDate           DateTime?
+  riskLevel         RiskLevel
+  status            InvestmentPlanStatus @default(PENDING_APPROVAL)
+  
+  // User approval tracking
+  userApproved      Boolean   @default(false)
+  approvedAt        DateTime?
+  
+  // Returns withdrawal tracking
+  lastReturnWithdrawal DateTime?
+  redeemedAt        DateTime?
+  
+  // Expected returns (calculated)
+  expectedReturn    Decimal?
+  expectedReturnPercent Float?
+  
+  // Allocation breakdown (JSON for flexibility)
+  allocation        Json      // { "SIP": 40, "FD": 20, "PPF": 20, "STOCKS": 20 }
+  
+  executions        InvestmentExecution[]
+  scheduledInvestments ScheduledInvestment[]
+  walletTransactions WalletTransaction[]
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("investment_plans")
+}
+
+model InvestmentExecution {
+  id                String    @id @default(uuid())
+  planId            String
+  plan              InvestmentPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+  investmentType    InvestmentType
+  amount            Decimal
+  units             Decimal?  // For mutual funds/stocks
+  navPrice          Decimal?  // Net Asset Value at time of purchase
+  stockPrice        Decimal?  // For stocks
+  status            ExecutionStatus @default(PENDING)
+  
+  // Broker integration fields
+  brokerAccountId   String?
+  brokerAccount     BrokerAccount? @relation(fields: [brokerAccountId], references: [id])
+  brokerOrderId     String?
+  brokerResponse    Json?
+  
+  executedAt        DateTime?
+  failureReason     String?
+  
+  // Performance tracking
+  currentValue      Decimal?
+  returnAmount      Decimal?
+  returnPercent     Float?
+  lastValueUpdate   DateTime?
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@index([planId])
+  @@index([brokerOrderId])
+  @@map("investment_executions")
+}
+
+model ScheduledInvestment {
+  id                String    @id @default(uuid())
+  planId            String
+  plan              InvestmentPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+  investmentType    InvestmentType
+  amount            Decimal
+  frequency         RecurringInterval
+  nextExecutionDate DateTime
+  lastExecutedAt    DateTime?
+  isActive          Boolean   @default(true)
+  failureCount      Int       @default(0)
+  maxFailures       Int       @default(3)
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@index([planId])
+  @@index([nextExecutionDate])
+  @@map("scheduled_investments")
+}
+
+// ==================== SAVINGS GOALS ====================
+
+model SavingsGoal {
+  id              String    @id @default(uuid())
+  userId          String
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name            String
+  targetAmount    Decimal
+  currentAmount   Decimal   @default(0)
+  deadline        DateTime?
+  category        String?   // Emergency, Vacation, Home, Education, etc.
+  
+  // Auto-save settings
+  autoSaveEnabled Boolean   @default(false)
+  autoSaveAmount  Decimal?
+  autoSaveFrequency RecurringInterval?
+  nextAutoSaveDate DateTime?
+  
+  // Round-up savings
+  roundUpEnabled  Boolean   @default(false)
+  roundUpMultiple Int       @default(10) // Round to nearest 10, 50, 100
+  
+  status          GoalStatus @default(ACTIVE)
+  completedAt     DateTime?
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("savings_goals")
+}
+
+// ==================== BROKER INTEGRATION ====================
+
+model BrokerAccount {
+  id              String    @id @default(uuid())
+  userId          String
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  broker          BrokerType
+  accountId       String    // Broker's account ID
+  accessToken     String?   // Encrypted access token
+  refreshToken    String?   // Encrypted refresh token
+  tokenExpiry     DateTime?
+  isActive        Boolean   @default(true)
+  lastSyncAt      DateTime?
+  
+  executions      InvestmentExecution[]
+  holdings        BrokerHolding[]
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@unique([userId, broker])
+  @@index([userId])
+  @@map("broker_accounts")
+}
+
+model BrokerHolding {
+  id              String    @id @default(uuid())
+  brokerAccountId String
+  brokerAccount   BrokerAccount @relation(fields: [brokerAccountId], references: [id], onDelete: Cascade)
+  symbol          String
+  name            String?
+  quantity        Decimal
+  averagePrice    Decimal
+  currentPrice    Decimal?
+  currentValue    Decimal?
+  pnl             Decimal?
+  pnlPercent      Float?
+  instrumentType  String    // EQUITY, MF, ETF, etc.
+  lastUpdated     DateTime  @default(now())
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([brokerAccountId])
+  @@map("broker_holdings")
+}
+
+model Account {
+  id           String        @id @default(uuid())
+  name         String
+  type         AccountType
+  balance      Decimal       @default(0) // will ask inital balance while creating an account
+  isDefault    Boolean       @default(false)
+  userId       String
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@index([userId])
+  @@map("accounts")
+}
+
+model Transaction {
+  id                String            @id @default(uuid())
+  type             TransactionType
+  amount           Decimal
+  description      String?
+  merchant         String?           // Merchant or payee name
+  date             DateTime
+  category         String           
+  receiptUrl       String?
+  isRecurring      Boolean           @default(false)
+  recurringInterval RecurringInterval? // Only used if isRecurring is true
+  nextRecurringDate DateTime?         // Next date for recurring transaction
+  lastProcessed    DateTime?         // Last time this recurring transaction was processed
+  status           TransactionStatus  @default(COMPLETED)
+  userId           String
+  user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accountId        String
+  account          Account           @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  @@index([userId])
+  @@index([accountId])
+  @@map("transactions")
+}
+
+
+model Budget {
+  id          String       @id @default(uuid())
+  amount      Decimal
+  lastAlertSent DateTime?  // Track when the last alert was sent
+  userId      String       @unique
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@index([userId])
+  @@map("budgets")
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
+enum AccountType {
+  CURRENT
+  SAVINGS
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+enum RecurringInterval {
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
+}
+
+// ==================== NEW ENUMS ====================
+
+enum WalletTransactionType {
+  DEPOSIT
+  WITHDRAWAL
+  INVESTMENT
+  INVESTMENT_RETURN
+  INVESTMENT_REDEMPTION
+  REFUND
+  TRANSFER_IN
+  TRANSFER_OUT
+  REWARD
+}
+
+enum WalletTransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  CANCELLED
+  REFUNDED
+}
+
+enum PaymentGateway {
+  RAZORPAY
+  STRIPE
+}
+
+enum RiskLevel {
+  CONSERVATIVE
+  MODERATELY_CONSERVATIVE
+  MODERATE
+  MODERATELY_AGGRESSIVE
+  AGGRESSIVE
+}
+
+enum AssessmentType {
+  QUESTIONNAIRE
+  AI_DRIVEN
+  HYBRID
+}
+
+enum InvestmentPlanStatus {
+  DRAFT
+  PENDING_APPROVAL
+  ACTIVE
+  PAUSED
+  COMPLETED
+  CANCELLED
+  REDEEMED
+}
+
+enum InvestmentType {
+  // Market-Linked
+  SIP
+  LUMPSUM
+  STOCKS
+  MUTUAL_FUND_EQUITY
+  MUTUAL_FUND_DEBT
+  MUTUAL_FUND_HYBRID
+  ETF
+  INDEX_FUND
+  ELSS
+  
+  // Fixed Income - Private
+  FD
+  RD
+  CORPORATE_BONDS
+  CORPORATE_FD
+  DEBENTURES
+  
+  // Government Schemes
+  PPF
+  NPS
+  SCSS
+  SSY
+  NSC
+  KVP
+  POST_OFFICE_FD
+  POST_OFFICE_RD
+  POST_OFFICE_MIS
+  SGB
+  RBI_BONDS
+  GOVT_SECURITIES
+  ATAL_PENSION
+  PM_VAYA_VANDANA
+  
+  // Alternative
+  GOLD
+  DIGITAL_GOLD
+  SILVER
+  REAL_ESTATE
+  REITS
+  INVITS
+  P2P_LENDING
+  INVOICE_DISCOUNTING
+  CRYPTO
+}
+
+enum ExecutionStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  CANCELLED
+  PARTIALLY_FILLED
+}
+
+enum GoalStatus {
+  ACTIVE
+  PAUSED
+  COMPLETED
+  CANCELLED
+}
+
+enum BrokerType {
+  ZERODHA
+  GROWW
+  UPSTOX
+  ANGEL_ONE
+  PAYTM_MONEY
+}
+
+// ==================== KYC ENUMS ====================
+
+enum KycStatus {
+  PENDING
+  IN_PROGRESS
+  VERIFIED
+  REJECTED
+  EXPIRED
+}
+
+enum KycVerificationType {
+  PAN
+  AADHAAR
+  BANK_ACCOUNT
+  ADDRESS
+  PHOTO
+}
+
+enum KycVerificationStatus {
+  PENDING
+  VERIFIED
+  FAILED
+  EXPIRED
+}

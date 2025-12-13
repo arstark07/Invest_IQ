@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="500" viewBox="0 0 900 500">
+  <style>
+    .box{fill:#fff;stroke:#0b1220;stroke-width:1.6;}
+    .title{font:14px sans-serif;fill:#0b1220;font-weight:700}
+    .label{font:12px sans-serif;fill:#0b1220}
+    .arrow{stroke:#0b1220;stroke-width:1.6;fill:none;marker-end:url(#arrow)}
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#0b1220" />
+    </marker>
+  </defs>
+
+  <rect x="30" y="30" width="200" height="70" class="box" rx="8"/>
+  <text x="50" y="60" class="title">Client</text>
+  <text x="50" y="80" class="label">Collects account selection</text>
+
+  <rect x="330" y="30" width="240" height="90" class="box" rx="8"/>
+  <text x="360" y="60" class="title">Server Action</text>
+  <text x="360" y="82" class="label">getAccountRecommendations()</text>
+
+  <rect x="630" y="30" width="200" height="70" class="box" rx="8"/>
+  <text x="650" y="60" class="title">DB</text>
+  <text x="650" y="80" class="label">Transactions & Accounts</text>
+
+  <rect x="330" y="180" width="240" height="70" class="box" rx="8"/>
+  <text x="360" y="210" class="title">AI Provider</text>
+  <text x="360" y="230" class="label">OpenRouter (Chat Completion)</text>
+
+  <path d="M230 65 L330 65" class="arrow" />
+  <path d="M470 120 L470 180" class="arrow" />
+  <path d="M470 60 L630 60" class="arrow" />
+  <path d="M470 240 L470 300" class="arrow" />
+
+  <text x="40" y="330" class="label">Flow: Client → Server Action (fetch transactions) → DB → Server composes prompt → AI → Server returns recommendation → Client displays</text>
+</svg>

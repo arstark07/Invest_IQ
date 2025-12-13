@@ -1,0 +1,43 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='900' height='520'>
+<rect width='900' height='520' fill='#f8fafc'/>
+<rect x='30' y='30' width='180' height='80' fill='#e0f2fe' stroke='#0ea5e9'/>
+<text x='120' y='75' font-family='Arial' font-size='14' text-anchor='middle'>Browser / Client</text>
+<rect x='260' y='30' width='200' height='160' fill='#dcfce7' stroke='#22c55e'/>
+<text x='360' y='70' font-family='Arial' font-size='14' text-anchor='middle'>Next.js Edge</text>
+<text x='360' y='95' font-family='Arial' font-size='12' text-anchor='middle'>Middleware / RSC</text>
+<text x='360' y='120' font-family='Arial' font-size='12' text-anchor='middle'>Rate Limits / Auth</text>
+<rect x='500' y='30' width='200' height='160' fill='#fef3c7' stroke='#f59e0b'/>
+<text x='600' y='70' font-family='Arial' font-size='14' text-anchor='middle'>Server Actions</text>
+<text x='600' y='95' font-family='Arial' font-size='12' text-anchor='middle'>Validation / Orchestration</text>
+<text x='600' y='120' font-family='Arial' font-size='12' text-anchor='middle'>Caching / Audits</text>
+<rect x='740' y='30' width='130' height='160' fill='#e0f2fe' stroke='#0ea5e9'/>
+<text x='805' y='75' font-family='Arial' font-size='13' text-anchor='middle'>Email</text>
+<text x='805' y='100' font-family='Arial' font-size='11' text-anchor='middle'>Alerts/Receipts</text>
+<rect x='30' y='240' width='200' height='200' fill='#ddd6fe' stroke='#8b5cf6'/>
+<text x='130' y='280' font-family='Arial' font-size='14' text-anchor='middle'>Clerk Auth</text>
+<text x='130' y='305' font-family='Arial' font-size='12' text-anchor='middle'>JWT / Sessions</text>
+<rect x='270' y='240' width='220' height='200' fill='#e0f2fe' stroke='#0ea5e9'/>
+<text x='380' y='280' font-family='Arial' font-size='14' text-anchor='middle'>OpenRouter LLM</text>
+<text x='380' y='305' font-family='Arial' font-size='12' text-anchor='middle'>Recs / Explanations</text>
+<rect x='530' y='240' width='200' height='200' fill='#bfdbfe' stroke='#3b82f6'/>
+<text x='630' y='280' font-family='Arial' font-size='14' text-anchor='middle'>Prisma ORM</text>
+<text x='630' y='305' font-family='Arial' font-size='12' text-anchor='middle'>Transactions / RLS</text>
+<rect x='770' y='240' width='100' height='200' fill='#fecdd3' stroke='#f43f5e'/>
+<text x='820' y='280' font-family='Arial' font-size='13' text-anchor='middle'>Supabase</text>
+<text x='820' y='305' font-family='Arial' font-size='11' text-anchor='middle'>PostgreSQL</text>
+<line x1='210' y1='70' x2='260' y2='70' stroke='#0f172a' stroke-width='2' marker-end='url(#arrow)'/>
+<line x1='460' y1='110' x2='500' y2='110' stroke='#0f172a' stroke-width='2' marker-end='url(#arrow)'/>
+<line x1='700' y1='110' x2='740' y2='110' stroke='#0f172a' stroke-width='2' marker-end='url(#arrow)'/>
+<line x1='600' y1='190' x2='600' y2='240' stroke='#0f172a' stroke-width='2' marker-end='url(#arrow)'/>
+<line x1='470' y1='320' x2='530' y2='320' stroke='#0f172a' stroke-width='2' marker-end='url(#arrow)'/>
+<line x1='730' y1='320' x2='770' y2='320' stroke='#0f172a' stroke-width='2' marker-end='url(#arrow)'/>
+<line x1='230' y1='300' x2='270' y2='300' stroke='#0f172a' stroke-width='2' marker-end='url(#arrow)'/>
+<line x1='380' y1='200' x2='380' y2='240' stroke='#0f172a' stroke-width='2' marker-end='url(#arrow)'/>
+<line x1='630' y1='440' x2='630' y2='480' stroke='#0f172a' stroke-width='2' marker-end='url(#arrow)'/>
+<text x='630' y='500' font-family='Arial' font-size='11' text-anchor='middle'>Backups / DR</text>
+<defs>
+  <marker id='arrow' markerWidth='10' markerHeight='10' refX='6' refY='3' orient='auto' markerUnits='strokeWidth'>
+    <path d='M0,0 L0,6 L9,3 z' fill='#0f172a' />
+  </marker>
+</defs>
+</svg>

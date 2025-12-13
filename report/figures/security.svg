@@ -1,0 +1,33 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='860' height='360'>
+<rect width='860' height='360' fill='#f8fafc'/>
+<text x='430' y='30' font-family='Arial' font-size='14' text-anchor='middle'>Security Envelope</text>
+<rect x='80' y='70' width='160' height='70' fill='#e0f2fe' stroke='#0ea5e9'/>
+<text x='160' y='105' font-family='Arial' font-size='12' text-anchor='middle'>TLS + HSTS</text>
+<rect x='280' y='70' width='160' height='70' fill='#dcfce7' stroke='#22c55e'/>
+<text x='360' y='105' font-family='Arial' font-size='12' text-anchor='middle'>Auth (Clerk JWT)</text>
+<rect x='480' y='70' width='160' height='70' fill='#ddd6fe' stroke='#8b5cf6'/>
+<text x='560' y='95' font-family='Arial' font-size='12' text-anchor='middle'>RLS + RBAC</text>
+<text x='560' y='115' font-family='Arial' font-size='11' text-anchor='middle'>userId scoping</text>
+<rect x='680' y='70' width='120' height='70' fill='#fef3c7' stroke='#f59e0b'/>
+<text x='740' y='105' font-family='Arial' font-size='12' text-anchor='middle'>Rate Limits</text>
+<rect x='80' y='200' width='160' height='70' fill='#fecdd3' stroke='#f43f5e'/>
+<text x='160' y='235' font-family='Arial' font-size='12' text-anchor='middle'>PIN Hash (bcrypt)</text>
+<rect x='280' y='200' width='160' height='70' fill='#bfdbfe' stroke='#3b82f6'/>
+<text x='360' y='235' font-family='Arial' font-size='12' text-anchor='middle'>Audit Logs</text>
+<rect x='480' y='200' width='160' height='70' fill='#dcfce7' stroke='#22c55e'/>
+<text x='560' y='235' font-family='Arial' font-size='12' text-anchor='middle'>Secrets Mgmt</text>
+<rect x='680' y='200' width='120' height='70' fill='#e0f2fe' stroke='#0ea5e9'/>
+<text x='740' y='235' font-family='Arial' font-size='12' text-anchor='middle'>Backups / DR</text>
+<line x1='240' y1='105' x2='280' y2='105' stroke='#0f172a' stroke-width='2' marker-end='url(#arrow)'/>
+<line x1='440' y1='105' x2='480' y2='105' stroke='#0f172a' stroke-width='2' marker-end='url(#arrow)'/>
+<line x1='640' y1='105' x2='680' y2='105' stroke='#0f172a' stroke-width='2' marker-end='url(#arrow)'/>
+<line x1='160' y1='140' x2='160' y2='200' stroke='#0f172a' stroke-width='2' marker-end='url(#arrow)'/>
+<line x1='360' y1='140' x2='360' y2='200' stroke='#0f172a' stroke-width='2' marker-end='url(#arrow)'/>
+<line x1='560' y1='140' x2='560' y2='200' stroke='#0f172a' stroke-width='2' marker-end='url(#arrow)'/>
+<line x1='740' y1='140' x2='740' y2='200' stroke='#0f172a' stroke-width='2' marker-end='url(#arrow)'/>
+<defs>
+  <marker id='arrow' markerWidth='10' markerHeight='10' refX='6' refY='3' orient='auto' markerUnits='strokeWidth'>
+    <path d='M0,0 L0,6 L9,3 z' fill='#0f172a' />
+  </marker>
+</defs>
+</svg>

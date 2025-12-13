@@ -1,0 +1,42 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='920' height='500'>
+<rect width='920' height='500' fill='#f8fafc'/>
+<rect x='40' y='40' width='140' height='120' fill='#e0f2fe' stroke='#0ea5e9'/>
+<text x='110' y='70' font-family='Arial' font-size='14' text-anchor='middle'>User</text>
+<text x='110' y='95' font-family='Arial' font-size='11' text-anchor='middle'>id (PK)</text>
+<text x='110' y='115' font-family='Arial' font-size='11' text-anchor='middle'>email, role</text>
+<rect x='240' y='40' width='160' height='140' fill='#dcfce7' stroke='#22c55e'/>
+<text x='320' y='70' font-family='Arial' font-size='14' text-anchor='middle'>Account</text>
+<text x='320' y='95' font-family='Arial' font-size='11' text-anchor='middle'>id (PK), userId (FK)</text>
+<text x='320' y='115' font-family='Arial' font-size='11' text-anchor='middle'>type, balance</text>
+<rect x='440' y='40' width='180' height='170' fill='#fef3c7' stroke='#f59e0b'/>
+<text x='530' y='70' font-family='Arial' font-size='14' text-anchor='middle'>Transaction</text>
+<text x='530' y='95' font-family='Arial' font-size='11' text-anchor='middle'>id (PK), accountId (FK)</text>
+<text x='530' y='115' font-family='Arial' font-size='11' text-anchor='middle'>amount, category</text>
+<text x='530' y='135' font-family='Arial' font-size='11' text-anchor='middle'>merchant, ts</text>
+<rect x='660' y='40' width='200' height='140' fill='#ddd6fe' stroke='#8b5cf6'/>
+<text x='760' y='70' font-family='Arial' font-size='14' text-anchor='middle'>Recommendation</text>
+<text x='760' y='95' font-family='Arial' font-size='11' text-anchor='middle'>id (PK), userId (FK)</text>
+<text x='760' y='115' font-family='Arial' font-size='11' text-anchor='middle'>payload JSON</text>
+<rect x='40' y='220' width='140' height='120' fill='#bfdbfe' stroke='#3b82f6'/>
+<text x='110' y='250' font-family='Arial' font-size='14' text-anchor='middle'>Wallet</text>
+<text x='110' y='275' font-family='Arial' font-size='11' text-anchor='middle'>id (PK), userId (FK)</text>
+<text x='110' y='295' font-family='Arial' font-size='11' text-anchor='middle'>pinHash, balance</text>
+<rect x='240' y='220' width='160' height='120' fill='#fecdd3' stroke='#f43f5e'/>
+<text x='320' y='250' font-family='Arial' font-size='14' text-anchor='middle'>Budget</text>
+<text x='320' y='275' font-family='Arial' font-size='11' text-anchor='middle'>id (PK), userId (FK)</text>
+<text x='320' y='295' font-family='Arial' font-size='11' text-anchor='middle'>category, limit</text>
+<rect x='440' y='240' width='180' height='120' fill='#dcfce7' stroke='#22c55e'/>
+<text x='530' y='270' font-family='Arial' font-size='14' text-anchor='middle'>Audit</text>
+<text x='530' y='295' font-family='Arial' font-size='11' text-anchor='middle'>id (PK), userId (FK)</text>
+<text x='530' y='315' font-family='Arial' font-size='11' text-anchor='middle'>action, before/after</text>
+<line x1='180' y1='80' x2='240' y2='80' stroke='#0f172a' stroke-width='2' marker-end='url(#arrow)'/>
+<line x1='400' y1='90' x2='440' y2='90' stroke='#0f172a' stroke-width='2' marker-end='url(#arrow)'/>
+<line x1='180' y1='260' x2='240' y2='260' stroke='#0f172a' stroke-width='2' marker-end='url(#arrow)'/>
+<line x1='400' y1='260' x2='440' y2='260' stroke='#0f172a' stroke-width='2' marker-end='url(#arrow)'/>
+<line x1='620' y1='110' x2='660' y2='110' stroke='#0f172a' stroke-width='2' marker-end='url(#arrow)'/>
+<defs>
+  <marker id='arrow' markerWidth='10' markerHeight='10' refX='6' refY='3' orient='auto' markerUnits='strokeWidth'>
+    <path d='M0,0 L0,6 L9,3 z' fill='#0f172a' />
+  </marker>
+</defs>
+</svg>

@@ -1,0 +1,15 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='720' height='520'>
+<rect width='720' height='520' fill='#f8fafc'/>
+<rect x='60' y='60' width='600' height='60' fill='#e0f2fe' stroke='#0ea5e9'/>
+<text x='360' y='95' font-family='Arial' font-size='14' text-anchor='middle'>Presentation: Next.js 15, React 19, Tailwind, shadcn/ui</text>
+<rect x='60' y='140' width='600' height='60' fill='#dcfce7' stroke='#22c55e'/>
+<text x='360' y='175' font-family='Arial' font-size='14' text-anchor='middle'>Application: Server Actions, zod validation, rate limiting</text>
+<rect x='60' y='220' width='600' height='60' fill='#fef3c7' stroke='#f59e0b'/>
+<text x='360' y='255' font-family='Arial' font-size='14' text-anchor='middle'>Data: Prisma ORM, Supabase PostgreSQL, caching</text>
+<rect x='60' y='300' width='600' height='60' fill='#ddd6fe' stroke='#8b5cf6'/>
+<text x='360' y='335' font-family='Arial' font-size='14' text-anchor='middle'>AI: OpenRouter models, prompt templates, JSON schema</text>
+<rect x='60' y='380' width='600' height='60' fill='#bfdbfe' stroke='#3b82f6'/>
+<text x='360' y='415' font-family='Arial' font-size='14' text-anchor='middle'>Security &amp; Auth: Clerk, JWT, PIN hashing, RLS</text>
+<rect x='60' y='460' width='600' height='40' fill='#fecdd3' stroke='#f43f5e'/>
+<text x='360' y='488' font-family='Arial' font-size='13' text-anchor='middle'>Observability: logs, p95 latency, error rate, backups/DR</text>
+</svg>
